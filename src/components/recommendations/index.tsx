@@ -5,10 +5,6 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
 import { config } from "@/config";
-import {
-  trackProductListClickSpec,
-  trackProductListViewSpec,
-} from "@/lib/tracking/snowplow";
 
 interface RecommendationsProps {
   containerClass?: string;
@@ -40,29 +36,10 @@ export function Recommendations({
       size: product.size,
       currency: config.store.DEFAULT_CURRENCY,
     }));
-
-    trackProductListViewSpec({
-      products: productFormatToTrack,
-      name: title,
-    });
   }, []);
 
   function handleRecommendedProductClick(product: Product, index: number) {
-    trackProductListClickSpec({
-      product: {
-        id: product.id,
-        name: product.name,
-        brand: product.brand,
-        category: product.category,
-        price: product.price,
-        position: index,
-        variant: product.variant,
-        creative_id: product.imgSrc,
-        size: product.size,
-        currency: config.store.DEFAULT_CURRENCY,
-      },
-      name: title,
-    });
+
   }
 
   return (

@@ -6,6 +6,7 @@ import { CreditCard } from "lucide-react";
 import { useRouter } from "next/router";
 import { useCartStore } from "@/store";
 import { useUserStore } from "@/store/userStore";
+import { trackTransactionSpec, createTransaction } from "@/lib/tracking/snowplow";
 
 export function Payment() {
   const [cardNumber, setCardNumber] = useState("");
@@ -63,6 +64,16 @@ export function Payment() {
       }),
     });
     const jsonRes = await res.json();
+    trackTransactionSpec({
+      type: "transaction",
+      context: [createTransaction({
+        transaction_id: cartId,
+        revenue: totalAmount,
+        currency: "USD",
+        payment_method: "card",
+        total_quantity: cartProducts.reduce((acc, item) => acc + (item.quantityInCart || 1), 0),
+      })]
+    });
     clearCart();
     router.replace("/?success=true&id=" + jsonRes.id);
   };

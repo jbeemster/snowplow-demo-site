@@ -4,7 +4,6 @@ import { useCartStore } from "@/store";
 import { Product as ProductType } from "@/types/product";
 import { Recommendations } from "../recommendations";
 import { config } from "@/config";
-import { trackAddToCartSpec } from "@/lib/tracking/snowplow";
 
 interface ProductProps {
   product: ProductType;
@@ -16,24 +15,6 @@ export function Product({ product }: ProductProps) {
 
   function handleAddToCart() {
     addProductToCart(product);
-
-    trackAddToCartSpec({
-      products: [
-        {
-          variant: product.variant,
-          creative_id: product.imgSrc,
-          size: product.size,
-          id: product.id,
-          name: product.name,
-          brand: product.brand,
-          category: product.category,
-          price: product.price,
-          currency: config.store.DEFAULT_CURRENCY,
-        },
-      ],
-      total_value: totalAmount,
-      currency: config.store.DEFAULT_CURRENCY,
-    });
   }
 
   return (

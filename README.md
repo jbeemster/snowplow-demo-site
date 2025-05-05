@@ -6,13 +6,11 @@
 
 An example retail & ecommerce store, powered by Next.js and instrumented with partial Snowplow tracking.
 
-
 ## Running locally
 
 1. `npm install`
 2. Fill the environment variables required in a local env file. `cp .env.example .env.local`
 3. `npm run dev`
-
 
 ## Where to start customising?
 
@@ -21,7 +19,6 @@ There is already some partial Snowplow tracking added to this example Ecommerce 
 #### src/lib/snowplow/snowplow.ts 
 - Update the tracker configuration settings with your own
 - Add automatic, out-of-the-box Page Pings, Link Clicks, Button Clicks and Form Tracking
-
 
 #### src/components/analytics/PageTracker.tsx
 - Enable automatic, out-of-the-box tracking with `tracker?.trackPageView();`

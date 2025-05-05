@@ -6,10 +6,6 @@ import { BsFilter } from "react-icons/bs";
 import { Product } from "@/types/product";
 import { useEffect } from "react";
 import { config } from "@/config";
-import {
-  trackProductListClickSpec,
-  trackProductListViewSpec,
-} from "@/lib/tracking/snowplow";
 
 interface CategoryProps {
   products?: Product[];
@@ -33,29 +29,10 @@ export function Category({
       size: product.size,
       currency: config.store.DEFAULT_CURRENCY,
     }));
-
-    trackProductListViewSpec({
-      products: productFormatToTrack,
-      name: categoryName,
-    });
   }, []);
 
   function handleCategoryProductClick(product: Product, index: number) {
-    trackProductListClickSpec({
-      product: {
-        id: product.id,
-        name: product.name,
-        brand: product.brand,
-        category: product.category,
-        price: product.price,
-        position: index,
-        variant: product.variant,
-        creative_id: product.imgSrc,
-        size: product.size,
-        currency: config.store.DEFAULT_CURRENCY,
-      },
-      name: categoryName,
-    });
+    
   }
 
   return (

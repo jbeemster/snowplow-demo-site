@@ -4,7 +4,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { config } from "@/config";
-import { trackTrackProductViewSpec } from "@/lib/tracking/snowplow";
 
 export default function ProductPage() {
   const {
@@ -17,18 +16,6 @@ export default function ProductPage() {
     if (!product) {
       return;
     }
-
-    trackTrackProductViewSpec({
-      id: product.id,
-      name: product.name,
-      brand: product.brand,
-      category: product.category,
-      price: product.price,
-      variant: product.variant,
-      creative_id: product.imgSrc,
-      size: product.size,
-      currency: config.store.DEFAULT_CURRENCY,
-    });
   }, [product]);
 
   if (!product) {

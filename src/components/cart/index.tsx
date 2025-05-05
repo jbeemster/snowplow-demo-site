@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useCartStore } from "@/store";
 import { Recommendations } from "../recommendations";
 import { useEffect } from "react";
-import { trackCheckoutStepSpec } from "@/lib/tracking/snowplow";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/router";
 
@@ -14,11 +13,6 @@ export function Cart() {
   const totalAmount = useCartStore((state) => state.totalAmount);
 
   async function handleCheckout() {
-    trackCheckoutStepSpec({
-      step: 2,
-      payment_method: "card",
-    });
-
     router.push("/payment");
   }
 
@@ -26,10 +20,6 @@ export function Cart() {
     if (!cartProducts.length) {
       return;
     }
-
-    trackCheckoutStepSpec({
-      step: 1,
-    });
   }, [cartProducts.length, cartProducts, totalAmount]);
 
   return (

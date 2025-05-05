@@ -4,10 +4,6 @@ import { Recommendations } from "../recommendations";
 import Image from "next/image";
 import { mockProducts } from "@/mocks/products";
 import { useEffect, useMemo } from "react";
-import {
-  trackInternalPromotionClickSpec,
-  trackInternalPromotionViewSpec,
-} from "@/lib/tracking/snowplow";
 
 const randomProduct =
   mockProducts[Math.floor(Math.random() * mockProducts.length)];
@@ -27,11 +23,11 @@ export function Home() {
   );
 
   function handleBannerClick() {
-    trackInternalPromotionClickSpec(promoObject);
+
   }
 
   useEffect(() => {
-    trackInternalPromotionViewSpec(promoObject);
+
   }, [promoObject]);
 
 
